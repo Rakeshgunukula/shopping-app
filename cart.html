@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">Cart Items</div>
+    <div class="inputcontainer">
+      <input type="text" placeholder="Search items..." id="cartInput">
+    </div>
+  </div>
+  <div class="cartcontainer">
+  <!-- added items to cart using js dynamically -->
+  </div>
+  <div class="cartFooter">
+    <div class="totalPrice">Total :- <b>0</b></div>
+    <div class="footerbtns">
+      <button class="cartBuy">Buy All</button>
+      <button class="cartRemove" onclick="removeItems()">Remove All</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
