@@ -34,11 +34,14 @@ const input = document.querySelector('.inputcontainer input');
 
 if(logo && input){
   window.addEventListener('scroll', ()=>{
-    const maxScroll = 100;
+    const maxScroll = 40;
     const progress = Math.min(window.scrollY / maxScroll, 1);
-    logo.style.opacity = 1 - progress;
-    logo.style.transform = `scale(${1 - progress})`;
-    input.style.transform = `translateX(${-40 * progress}px)`;
+    // logo.style.opacity = 1 - progress;
+    logo.style.transform = `scale(${1- progress})`;
+    // input.style.transform = `translateX(${-2 * progress}%)`;
+    input.style.flex = Math.min(0.6 + progress, 1);
+    input.style.border = `${Math.min(1 + progress, 10)}px solid #ccc`;
+
   });
 }
 
@@ -234,25 +237,33 @@ function removeItem(id){
 // =========Remove Items by clicking the one single button
 
   function removeItems(){
-    const cartItems = document.querySelectorAll('.cartItem');
-    let index = 0;
-    function removeNext(){
-      if(index >= cartItems.length){
-        cart = [];
-        saveCart();
-        updateCartPage();
-        updateCartCount();
-        return;
-      }
-      const item1 = cartItems[index];
-      item1.classList.add('remove');
-      setTimeout(()=>{
-        index++;
-        removeNext();
-      },1000)
+  const items = document.querySelectorAll('.cartItem');
+
+  if(items.length === 0) return;
+
+  let index = 0;
+
+  function removeNext(){
+    if(index >= items.length){
+      cart = [];
+      saveCart();
+      updateCartPage();
+      updateCartCount();
+      return;
     }
-    removeNext();
+
+    const currentItem = items[index];
+    currentItem.classList.add('remove');
+
+    setTimeout(()=>{
+      index++;
+      removeNext();
+    },400);
   }
+
+  removeNext();
+}
+
  
 
 /* ========= TOTAL ========= */
