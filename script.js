@@ -1,17 +1,17 @@
 /* ========= PRODUCTS ========= */
 
 const products = [
-  { id:1, name:'iPhone 16 pro', image:'/assets/iphone16pro.jpg', price:90000 },
-  { id:2, name:'iPhone 17 pro', image:'/assets/iphone17pro.jpg', price:100000 },
-  { id:3, name:'iPhone 16', image:'/assets/iphone16.jpg', price:72000 },
-  { id:4, name:'Acer Aspire', image:'/assets/aceraspire.jpg', price:42000 },
-  { id:5, name:'iPhone 16 pro max', image:'/assets/iphone16promax.jpg', price:120000 },
-  { id:6, name:'Bed', image:'/assets/bed.jpg', price:50000 },
-  { id:7, name:'MacBook air', image:'/assets/macbookair.jpg', price:80000 },
-  { id:8, name:'Royal Enfield', image:'/assets/royal.jpg', price:120000 },
+  { id:1, name:'iPhone 16 pro', image:'assets/iphone16pro.jpg', price:90000 },
+  { id:2, name:'iPhone 17 pro', image:'assets/iphone17pro.jpg', price:100000 },
+  { id:3, name:'iPhone 16', image:'assets/iphone16.jpg', price:72000 },
+  { id:4, name:'Acer Aspire', image:'assets/aceraspire.jpg', price:42000 },
+  { id:5, name:'iPhone 16 pro max', image:'assets/iphone16promax.jpg', price:120000 },
+  { id:6, name:'Bed', image:'assets/bed.jpg', price:50000 },
+  { id:7, name:'MacBook air', image:'assets/macbookair.jpg', price:80000 },
+  { id:8, name:'Royal Enfield', image:'assets/royal.jpg', price:120000 },
 ];
 
-/* ========= HELPERS ========= */
+// Formating Price according to indian currency
 
 function formatPrice(price){
   return price.toLocaleString('en-IN');
