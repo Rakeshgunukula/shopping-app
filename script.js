@@ -31,8 +31,8 @@ let cart = getCart();
 
 const logo = document.querySelector('.header .logo');
 const input = document.querySelector('.inputcontainer input');
-
-if(logo && input){
+const header = document.querySelector('.header');
+if(logo && input && header){
   window.addEventListener('scroll', ()=>{
     const maxScroll = 40;
     const progress = Math.min(window.scrollY / maxScroll, 1);
@@ -40,11 +40,18 @@ if(logo && input){
     logo.style.transform = `scale(${1- progress})`;
     // input.style.transform = `translateX(${-2 * progress}%)`;
     input.style.flex = Math.min(0.6 + progress, 1);
-    input.style.border = `${Math.min(1 + progress, 10)}px solid #ccc`;
-
+    input.style.border = `${Math.min(1 + progress, 5)}px solid #ccc`;
+    header.style.top = `${Math.min(-35 * progress)}px`;
+    if(window.scrollY > 35){
+      header.classList.add('shrink');
+      input.classList.add('shrink');
+    }
+    else{
+      header.classList.remove('shrink');
+      input.classList.remove('shrink');
+    }
   });
 }
-
 /* ========= DISPLAY PRODUCTS ========= */
 
 function displayProducts(filter = ''){
@@ -66,7 +73,7 @@ function displayProducts(filter = ''){
           </div>
           <div class="productbtns">
             <button onclick="addToCart(${product.id}, this)">Add to cart</button>
-            <button>Buy now</button>
+            <button onclick="displayOrders(${product.id})">Order Now</button>
           </div>
         </div>
       `;
@@ -276,18 +283,121 @@ function updateTotal(){
   el.textContent = formatPrice(total);
 }
 
-/* ========= NAV ========= */
+//==================Orders code
+// Formating dates
+const formater = new Intl.DateTimeFormat('en-IN',{
+  weekday:'short',
+  month:'short',
+  day:'2-digit',
+  year:'numeric',
+  hour:'2-digit',
+  minute:'2-digit',
+  hour12:true,
+});
+function getOrders(){
+  return JSON.parse(localStorage.getItem('orders')) || [];
+}
+let orders = getOrders();
+  function displayOrders(id){
+    const orderedItem = products.find(product => product.id === id);
+    orders.push({...orderedItem, time:formater.format(Date.now())});
+    saveorders();
+    updateOrders();
+  }
 
-const cartIcon = document.querySelector('.carticon');
-if(cartIcon){
-  cartIcon.addEventListener('click', ()=> location.href = 'cart.html');
+  // saveorders
+
+  function saveorders(){
+    localStorage.setItem('orders',JSON.stringify(orders));
+  }
+  function updateOrders(filter = ''){
+    const ordersContainer = document.querySelector('.ordersContainer');
+    if(!ordersContainer)return;
+    ordersContainer.innerHTML = '';
+    orders.forEach((order)=>{
+      if(order.name.toLowerCase().includes(filter)){
+      ordersContainer.innerHTML += `
+       <div class="orderItem">
+        <img src="${order.image}" alt="">
+        <div class="orderName">${order.name}</div>
+        <div class="orderPrice">&#8377;${formatPrice(order.price)}</div>
+        <div class="status">
+        <div class="step active">
+        <div class="tick"></div>
+  </div>
+  <div class="line"></div>
+  <div class="step">
+    <div class="tick"></div>
+  </div>
+  <div class="ordered">Ordered</div>
+  <div class="navBtn">></div>
+</div>
+<marquee class="orderDate">${order.time}</marquee>
+</div>
+</div>`;
+    }
+    });
+  }
+    // filter orders using filter method
+    const orderInput = document.querySelector('#orderInput');
+    if(orderInput){
+      orderInput.addEventListener('input',()=>{
+        updateOrders(orderInput.value.toLowerCase());
+      });
+    };
+
+    setTimeout(()=>{
+  const orderItems = document.querySelectorAll('.orderItem');
+
+  orderItems.forEach(item => {
+    const steps = item.querySelectorAll('.step');
+    const line  = item.querySelector('.line');
+
+    if(line) line.classList.add('active');
+    if(steps[1]) steps[1].classList.add('active');
+  });
+
+},1500);
+  // Removing Items
+  function clearOrders(){
+  const orderItems = document.querySelectorAll('.orderItem');
+  if(orderItems.length === 0)return;
+  let index = 0;
+  function removeNext(){
+    if(index >= orderItems.length){
+      // clear storage after animation
+      orders = [];
+      localStorage.removeItem('orders');
+      updateOrders();
+      return;
+    }
+
+    const item = orderItems[index];
+    item.classList.add('remove');
+
+    setTimeout(()=>{
+      index++;
+      removeNext();
+    },500); // speed control
+  }
+
+  removeNext();
 }
 
-/* ========= PAGE LOAD ========= */
+    // animation after render orders
+
+/* ========= NAV ========= */
+// Add event listener to cart
+const cartIcon = document.querySelector('.carticon');
+const ordersBtn = document.querySelector('.orders button');
+if(cartIcon){
+  cartIcon.addEventListener('click', ()=> location.href = 'cart.html');
+  // ordersBtn.addEventListener('click',()=> location.href = 'orders.html');
+}
+
 
 document.addEventListener('DOMContentLoaded', ()=>{
   updateCartCount();        
-  updateCartPage();           
+  updateCartPage();       
+  updateOrders();    
 });
-
-
