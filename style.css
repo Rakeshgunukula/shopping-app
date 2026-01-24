@@ -1,4 +1,4 @@
-
+/* ================= RESET ================= */
 *{
   margin:0;
   padding:0;
@@ -20,17 +20,32 @@ body::-webkit-scrollbar{
   background:maroon;
   padding:15px;
   position:sticky;
-  top:-35px;
+  /* top:-35px; */
   z-index:100;
   align-items: center;
   transition:all .4s ease;
 }
+.header.shrink{
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition:all .5s ease;
+  position:sticky;
+  background:rgba(0,0,0,0.5);
 
-/* .header.shrink{
-  padding:8px 15px;
-  background:#4a0000;
-} */
-
+}
+.header a{
+  text-align: end;
+  font-size:1.3rem;
+  text-decoration: none;
+  background:transparent;
+  border:none;
+  color:beige;
+  position: absolute;
+  left:0;
+  padding:10px;
+  margin-right:10px;
+  cursor:pointer;
+}
 .logo{
   text-align:center;
   font-size:1.4rem;
@@ -51,6 +66,7 @@ body::-webkit-scrollbar{
   padding:10px;
   border:none;
   outline:none;
+  margin-left:20px;
   background:beige;
   /* transition:all 1s ease; */
   border-radius:5px;
@@ -58,6 +74,9 @@ body::-webkit-scrollbar{
 }
 .inputcontainer input.shrink{
     border:1px solid white;
+    transition:all .5s ease;
+    color:white;
+    background:rgba(0,0,0,0.5);
 }
 /* CART ICON */
 .carticon{
@@ -85,6 +104,7 @@ body::-webkit-scrollbar{
 /* ================= INDEX PRODUCTS ================= */
 .productContainer{
   padding:15px;
+  padding-bottom: 120px;
   display:grid;
   grid-template-columns:repeat(2,1fr); /* mobile = 2 */
   gap:15px;
@@ -160,6 +180,43 @@ body::-webkit-scrollbar{
   color:beige;
 }
 
+/* Product Footer */
+.productFooter{
+  width:100%;
+  height:80px;
+  background:rgba(0,0,0,0.5);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  padding:20px;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  position: fixed;
+  bottom: 0;
+}
+
+.productFooter button{
+  padding:10px;
+  border-radius:10px;
+  background:black;
+  color:white;
+  border:none;
+  cursor: pointer;
+}
+.productFooter .file{
+  padding:20px;
+  background:transparent;
+  border:1px solid;
+  border-radius:50%;
+  cursor: pointer;
+}
+.productFooter .file i{
+  color:white;
+  font-weight:2rem;
+}
+.productFooter button:hover{
+  opacity:0.6;
+}
 /* ================= CART PAGE ================= */
 
 /* MOBILE : ONE ITEM */
@@ -167,7 +224,7 @@ body::-webkit-scrollbar{
   padding:15px;
   display:grid;
   grid-template-columns:1fr;
-  gap:15px;
+  gap:10px;
   padding-bottom:120px;
 }
 .cartItem{
@@ -180,13 +237,11 @@ body::-webkit-scrollbar{
   gap:10px;
   align-items:center;
   transition:all 1s ease;
-  overflow: hidden;
 }
 .cartItem.remove{
-  height:0;
-  top:0;
-  width:0;
-  transform:translateX(-250px);
+  height:0px;
+  opacity:0.3;
+  transform:translateX(-1500px);
 }
 .cartImage img{
   width:80px;
@@ -195,7 +250,6 @@ body::-webkit-scrollbar{
   border:2px solid maroon;
   border-radius:6px;
 }
-
 /* NAME + PRICE SIDE BY SIDE */
 .cartItemName{
   font-weight:bold;
@@ -256,7 +310,10 @@ body::-webkit-scrollbar{
   bottom:0;
   width:100%;
   align-items: center;
-  background:maroon;
+  background:rgba(0,0,0,0.5);
+  height:80px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   padding:12px;
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -311,32 +368,167 @@ body::-webkit-scrollbar{
   to{transform:translateY(-6px)}
 }
 
+  /* ================= ORDERS CONTAINER RESPONSIVE ================= */
+
+/* MOBILE FIRST */
+.ordersContainer{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  margin-top: 0px;
+  margin-bottom:150px;
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ORDER ITEM */
+.ordersContainer .orderItem{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 10px;
+
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,.6);
+  align-items: center;
+}
+
+/* IMAGE */
+.orderItem img{
+  width:60px;
+  height:60px;
+  padding: 4px;
+  border-radius: 10px;
+  grid-column: 1 / -1;
+  grid-row:2;
+  border: 1px solid;
+}
+
+/* TEXT POSITIONS */
+.ordersContainer .orderItem .orderName{
+  grid-column: 1;
+  font-weight: bold;
+}
+
+.ordersContainer .orderItem .orderPrice{
+  grid-column: 1;
+  background: #b2b295;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: .9rem;
+}
+
+.ordersContainer .orderItem .status{
+  grid-column:2 / -1;
+  grid-row:2;
+}
+
+.ordersContainer .orderItem .ordered{
+  font-weight: bold;
+  text-align: center;
+  margin-left:5px;
+  transition:all .5s ease;
+}
+.ordersContainer .orderItem .navBtn{
+ font-size:1rem;
+ margin-top:0px;
+ color:#898181;
+ font-weight: bold;
+ border-radius:50%;
+ padding:4px;
+
+ cursor: pointer;
+ margin-left:20px;
+}
+.ordersContainer .orderItem .orderDate{
+  grid-column: 2 / -1;
+  font-size: .65rem;
+  text-align: center;
+  background:seagreen;
+  letter-spacing: 2px;
+  font-size:.8rem;
+  color:white;
+  /* opacity: .8; */
+}
+.orderItem.remove{
+  opacity:0;
+  transform:translateX(-120%) translateY(-150px);
+  transition: all .6s ease;
+}
+.ordersFooter{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  align-items: center;
+  background:rgba(0,0,0,0.5);
+  height:80px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding:12px;
+  display:grid;
+  grid-template-columns:1fr 1fr  1fr;
+  gap:10px;
+}
+.ordersFooter a button{
+  padding:10px;
+  border:none;
+  background:black;
+  color:white;
+  border-radius:10px;
+  cursor: pointer;
+}
+.ordersFooter .orderHistory{
+  grid-column: 3;
+  padding:10px;
+  border-radius:5px;
+  background:black;
+  cursor: pointer;
+  border:none;
+  color:white;
+  letter-spacing:2px;
+}
 /* ================= DESKTOP / LAPTOP ================= */
 @media (min-width:900px){
 
+
   .header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-  }
+  width:100%;
+  background:maroon;
+  padding:15px;
+  position:sticky;
+  top:-30px;
+  z-index:100;
+  align-items: center;
+  transition:all .4s ease;
+}
 
   .inputcontainer{
-    margin-top:0;
+    margin-top:10px;
+    margin-left:20px;
+  }
+  .inputcontainer a{
+    padding:20px;
+   
   }
 
   /* index products */
   .productContainer{
     grid-template-columns:repeat(4,1fr);
     padding:30px;
+    margin-top:50px;
   }
 
   /* cart products */
   .cartcontainer{
     grid-template-columns:repeat(4,1fr);
     padding:30px;
+    margin-top:50px;
     padding-bottom:120px;
   }
-
   .cartItem{
     display:flex;
     flex-direction:column;
@@ -356,8 +548,108 @@ body::-webkit-scrollbar{
   }
 }
 
+    .ordersContainer{
+    max-width: 900px;  
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
+    margin-top:50px;
+  }
 
-/*lines numbers to identify the styling 
-line :- 15-85 : header content same for cart also
-line :- 86-162 : productscontainer same for cart also */
-/* cart page stylings */   
+  .ordersContainer .orderItem{
+    width: 100%;
+  }
+.status {
+  display: flex;
+  align-items: center;
+}
+
+.step {
+  text-align: center;
+}
+
+/* Circle */
+.tick {
+  width: 26px;
+  height: 26px;
+  border: 2px solid seagreen;;
+  border-radius: 50%;
+  position: relative;
+}
+
+/* Tick lines */
+.tick::before,
+.tick::after {
+  content: '';
+  position: absolute;
+  background: seagreen;;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* Small line */
+.tick::before {
+  width: 6px;
+  height: 3px;
+  left: 5px;
+  top: 10px;
+  transform: rotate(45deg) scaleX(0);
+}
+
+/* Long line */
+.tick::after {
+  width: 12px;
+  height: 3px;
+  left: 9px;
+  top:14px;
+  transform: rotate(-45deg) scaleX(0);
+}
+
+/* Animate tick */
+.step.active .tick::before {
+  animation: tick1 .5s ease forwards;
+}
+
+.step.active .tick::after {
+  animation: tick2 2s ease forwards;
+}
+
+@keyframes tick1 {
+  to {
+    transform: rotate(45deg) scaleX(1);
+  }
+}
+
+@keyframes tick2 {
+  to {
+    transform: rotate(-45deg) scaleX(1);
+  }
+}
+
+/* Line */
+.line {
+  width:100%;
+  height: 3px;
+  background: #ddd;
+  position: relative;
+  overflow: hidden;
+}
+
+.line::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  background: seagreen;
+}
+/* Line move */
+.line.active::after {
+  animation: moveLine 1.25s ease-in-out forwards;
+}
+
+@keyframes moveLine {
+  to {
+    width: 100%;
+  }
+}
+
